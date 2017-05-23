@@ -64,7 +64,7 @@ var book = function() {
 }
 
 /**
- * 2.3 继承
+ * 2.3.1 子类的原型继承-- 类式继承
  */
 
 function SuperClass() {
@@ -79,15 +79,16 @@ function SubClass() {
   this.subValue = false
 }
 
-SubClass.prototype = new SubClass()
+SubClass.prototype = new SuperClass()
 SubClass.prototype.getSubValue = function() {
   return this.subValue
 }
 
 var obj = new SubClass()
-obj.getSuperValue()
-obj.getSubValue()
+obj.getSuperValue() // true
+obj.getSubValue() // false
 
+/*****/
 function Super() {
   this.book = [1, 2, 3, 4]
 }
@@ -98,3 +99,83 @@ var a = new Sub()
 var b = new Sub()
 a.book.push(1)
 b.book.push(2)
+
+
+/**
+ * 2.3.2 创建及继承，构造函数继承
+ */
+
+function SuperClass(id) {
+  this.book = [1,2,3,4]
+  this.id = id
+}
+
+SubClass.prototype.showBook = function() {
+  console.log(this.book)
+}
+
+function SubClass(id) {
+  SuperClass.call(this, id)// call() 构造函数继承
+}
+
+var obj = new SubClass()
+obj.showBook()
+
+/**
+ * 2.3.3 组合式继承
+ */
+
+function SuperClass(name) {
+  this.name = name
+  this.book = [1, 2, 3, 4]
+}
+
+SuperClass.prototype.getName = function() {
+  console.log(this.name)
+}
+
+function SubClass(name, time) {
+  SuperClass.call(this, name)
+  this.time = time
+}
+
+SubClass.prototype = new SuperClass()
+SubClass.prototype.getTime = function() {
+  console.log(this.time)
+}
+
+var obj = new SubClass('javascript', 2016)
+obj.getTime()
+
+/**
+ * 2.3.4 原型式继承
+ */
+function inheritObj(obj) {
+  function F() {}
+  F.prototype = obj
+  return  new F()
+}
+
+var book = {
+  name : 'ajax',
+  price: 123,
+  arr: [1, 2, 3]
+}
+
+var book1 = new inheritObj(book)
+book1.price = 456
+book1.arr.push(4)
+console.log(book1.name)
+
+var book2 = new inheritObj(book)
+console.log(book2.arr)
+
+/**
+ * 2.3.5 寄生式继承
+ */
+
+// SuperClass : 父类
+// SubClass : 子类
+function inheritPrototype(SubClass, SuperClass) {
+
+}

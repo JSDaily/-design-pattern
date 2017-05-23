@@ -19,7 +19,7 @@ var user1 = createUser('leon', 24)
  * @param {*} name
  * @param {*} age
  */
-function(name, age) {
+function CreateUser(name, age) {
   this.name = name
   this.age = age
   // 这边的 sayName的函数设为全局变量，因为每个实例调用构造函数的方法，方法都会重新创建一边
@@ -112,3 +112,9 @@ var CheckObj = function() {
 
 var obj = new CheckObj() // 每次调用都是都是 return 出来新的对象实例
 
+var CheckObj = function() {
+  return {
+    name: 'leon',
+    age: 33
+  }
+}
